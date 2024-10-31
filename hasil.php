@@ -198,47 +198,63 @@ if ($status_sertifikat) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hasil Pencarian Obat Ikan</title>
     <style>
-        body {
-            background-color: #e0f7fa;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            width:auto;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #00796b;
-            color: #fff;
-            border-radius: 6px;
-        }
-        .logo img {
+    body {
+        background-color: #e0f7fa;
+        font-family: Arial, sans-serif;
+      
+    }
+
+    .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Menambah padding horizontal */
+    background-color: #00796b;
+    color: #fff;
+    border-radius: 6px;
+    width: calc(100% - 40px); /* Menyesuaikan lebar agar sejajar dengan tabel */
+    box-sizing: border-box;
+    margin: 0 auto; /* Mengatur agar header berada di tengah */
+    }
+
+    .logo img {
             width: 100px;
             height: auto;
-        }
-        .time {
+    }
+    .time {
             font-size: 14px;
             font-weight: bold;
-        }
-        table {
-            width: auto;
-            border-collapse: collapse;
-            background-color: #ffffff;
-            margin-top: 20px;
-           
-           /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0); */
-        }        th, td {
-            text-align: left;
-            padding: 10px;
-            border: 1px solid #ddd;
-            font-size: 12px;
-        }
-        th {
+    }
+    .container {
+    width: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: 100%; /* Menjaga lebar kontainer tidak melebihi tampilan */
+    }
+
+    .table-container {
+        max-height: 500px; /* Batas tinggi kontainer tabel */
+        overflow-y: auto; /* Scroll jika konten melebihi tinggi */
+      
+        border-radius: 6px; /* Sudut yang melengkung */
+        margin-top: 10px;
+    }
+
+    table {
+        width: 100%; /* Memastikan tabel mengisi kontainer */
+        border-collapse: collapse;
+        background-color: #ffffff;
+        margin-top: 20px;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 10px;
+        border: 1px solid #ddd;
+        font-size: 12px;
+    }
+
+    th {
             background-color: #009688;
             color: #fff;
             font-weight: bold;
@@ -250,44 +266,55 @@ if ($status_sertifikat) {
             width: 5%;
             text-align: center;
         }
-        .footer {
-            margin-top: 50px;
-            text-align: center;
-            color: #555;
-            font-size: 14px;
-        }
-        .btn-download {
-            display: inline-block;
-            padding: 10px 10px;
-            background-color: #00796b;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .btn-download:hover {
-            background-color: #004d40;
-        }
 
-        .btn-kembali {
-            display: inline-block;
-            background-color: red;
-            color: white;
-            padding: 10px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            text-align: center;
+    .footer {
+        margin-top: 20px; /* Mengurangi jarak antara footer dan tabel */
+        text-align: center;
+        color: #555;
+        font-size: 14px;
+    }
+
+    .btn-download, .btn-kembali {
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        text-decoration: none;
+    }
+
+    .btn-download {
+        background-color: #00796b;
+        color: #fff;
+    }
+
+    .btn-download:hover {
+        background-color: #004d40;
+    }
+
+    .btn-kembali {
+        display: inline-block;
+        background-color: red;
+        color: white;
+        border: none;
+    }
+
+    .btn-kembali a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .btn-kembali:hover {
+        background-color: darkred;
+    }
+
+    /* Media Queries untuk Responsivitas */
+    @media (max-width: 768px) {
+        th, td {
+            font-size: 10px; /* Ukuran font lebih kecil untuk perangkat kecil */
+            padding: 5px; /* Mengurangi padding */
         }
-        .btn-kembali a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .btn-kembali:hover {
-            background-color: darkred;
-        }
+    }
+
     </style>
 
     <script>
@@ -309,12 +336,14 @@ if ($status_sertifikat) {
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">
-                <img src="Data/bpkil.png" alt="Logo Obat Ikan">
+        <!-- <div class="table-container"> -->
+            <div class="header">
+                <div class="logo">
+                    <img src="Data/bpkil.png" alt="Logo Obat Ikan">
+                </div>
+                <div class="time" id="time"></div>
             </div>
-            <div class="time" id="time"></div>
-        </div>
+        <!-- </div> -->
 
         <h1 style="text-align: center;">Hasil Pencarian Obat Ikan</h1>
 
@@ -322,73 +351,75 @@ if ($status_sertifikat) {
              <a href="index.php">Kembali</a>
         </button>
 
-        <form action="" method="get">
-            <input type="hidden" name="main_keyword" value="<?= htmlspecialchars($main_keyword); ?>">
-            <!-- Add other hidden inputs for search criteria as before -->
-            <input type="hidden" name="main_keyword" value="<?= htmlspecialchars($main_keyword); ?>">
-            <input type="hidden" name="nama_perusahaan" value="<?= htmlspecialchars($nama_perusahaan); ?>">
-            <input type="hidden" name="alamat" value="<?= htmlspecialchars($alamat); ?>">
-            <input type="hidden" name="provinsi" value="<?= htmlspecialchars($provinsi); ?>">
-            <input type="hidden" name="jenis_perusahaan" value="<?= htmlspecialchars($jenis_perusahaan); ?>">
-            <input type="hidden" name="asal_obat" value="<?= htmlspecialchars($asal_obat); ?>">
-            <input type="hidden" name="golongan_obat" value="<?= htmlspecialchars($golongan_obat); ?>">
-            <input type="hidden" name="bentuk_sediaan" value="<?= htmlspecialchars($bentuk_sediaan); ?>">
-            <input type="hidden" name="jenis_sediaan" value="<?= htmlspecialchars($jenis_sediaan); ?>">
-            <input type="hidden" name="komposisi" value="<?= htmlspecialchars($komposisi); ?>">
-            <input type="hidden" name="indikasi" value="<?= htmlspecialchars($indikasi); ?>">
-            <input type="hidden" name="status_sertifikat" value="<?= htmlspecialchars($status_sertifikat); ?>">
-            <button type="submit" name="download_pdf" class="btn-download">Unduh Hasil Pencararian</button>
-
-        </form>
-      
-       
         
 
-        <?php if (count($results) > 0): ?>
-            <table>
-                <tr>
-                    <th class="nomor">NO</th>
-                    <th>NAMA OBAT</th>
-                    <th>NAMA PERUSAHAAN</th>
-                    <th>ALAMAT</th>
-                    <th>PROVINSI</th>
-                    <th>JENIS PERUSAHAAN</th>
-                    <th>NOMOR PENDAFTARAN</th>
-                    <th>ASAL OBAT</th>
-                    <th>GOLONGAN OBAT</th>
-                    <th>BENTUK SEDIAAN</th>
-                    <th>JENIS SEDIAAN</th>
-                    <th>KOMPOSISI</th>
-                    <th>INDIKASI</th>
-                    <th>MASA BERLAKU</th>
-                    <th>SISA WAKTU</th>
-                    <th>STATUS SERTIFIKAT</th>
-                </tr>
-                <?php $no = 1; ?>
-                <?php foreach ($results as $row): ?>
+            <form action="" method="get">
+                <input type="hidden" name="main_keyword" value="<?= htmlspecialchars($main_keyword); ?>">
+                <!-- Add other hidden inputs for search criteria as before -->
+                <input type="hidden" name="main_keyword" value="<?= htmlspecialchars($main_keyword); ?>">
+                <input type="hidden" name="nama_perusahaan" value="<?= htmlspecialchars($nama_perusahaan); ?>">
+                <input type="hidden" name="alamat" value="<?= htmlspecialchars($alamat); ?>">
+                <input type="hidden" name="provinsi" value="<?= htmlspecialchars($provinsi); ?>">
+                <input type="hidden" name="jenis_perusahaan" value="<?= htmlspecialchars($jenis_perusahaan); ?>">
+                <input type="hidden" name="asal_obat" value="<?= htmlspecialchars($asal_obat); ?>">
+                <input type="hidden" name="golongan_obat" value="<?= htmlspecialchars($golongan_obat); ?>">
+                <input type="hidden" name="bentuk_sediaan" value="<?= htmlspecialchars($bentuk_sediaan); ?>">
+                <input type="hidden" name="jenis_sediaan" value="<?= htmlspecialchars($jenis_sediaan); ?>">
+                <input type="hidden" name="komposisi" value="<?= htmlspecialchars($komposisi); ?>">
+                <input type="hidden" name="indikasi" value="<?= htmlspecialchars($indikasi); ?>">
+                <input type="hidden" name="status_sertifikat" value="<?= htmlspecialchars($status_sertifikat); ?>">
+                <button type="submit" name="download_pdf" class="btn-download">Unduh Hasil Pencararian</button>
+            </form>
+        
+        
+        <div class="table-container">    
+
+            <?php if (count($results) > 0): ?>
+                <table>
                     <tr>
-                        <td class="nomor"><?= $no++ ?></td>
-                        <td><?= htmlspecialchars($row['NAMA OBAT']); ?></td>
-                        <td><?= htmlspecialchars($row['NAMA PERUSAHAAN']); ?></td>
-                        <td><?= htmlspecialchars($row['ALAMAT']); ?></td>
-                        <td><?= htmlspecialchars($row['PROVINSI']); ?></td>
-                        <td><?= htmlspecialchars($row['JENIS PERUSAHAAN']); ?></td>
-                        <td><?= htmlspecialchars($row['NOMOR PENDAFTARAN']); ?></td>
-                        <td><?= htmlspecialchars($row['ASAL OBAT']); ?></td>
-                        <td><?= htmlspecialchars($row['GOLONGAN OBAT']); ?></td>
-                        <td><?= htmlspecialchars($row['BENTUK SEDIAAN']); ?></td>
-                        <td><?= htmlspecialchars($row['JENIS SEDIAAN']); ?></td>
-                        <td><?= htmlspecialchars($row['KOMPOSISI']); ?></td>
-                        <td><?= htmlspecialchars($row['INDIKASI']); ?></td>
-                        <td><?= htmlspecialchars($row['MASA BERLAKU']); ?></td>
-                        <td><?= htmlspecialchars($row['SISA WAKTU']); ?></td>
-                        <td><?= htmlspecialchars($row['STATUS SERTIFIKAT']); ?></td>
+                        <th class="nomor">NO</th>
+                        <th>NAMA OBAT</th>
+                        <th>NAMA PERUSAHAAN</th>
+                        <th>ALAMAT</th>
+                        <th>PROVINSI</th>
+                        <th>JENIS PERUSAHAAN</th>
+                        <th>NOMOR PENDAFTARAN</th>
+                        <th>ASAL OBAT</th>
+                        <th>GOLONGAN OBAT</th>
+                        <th>BENTUK SEDIAAN</th>
+                        <th>JENIS SEDIAAN</th>
+                        <th>KOMPOSISI</th>
+                        <th>INDIKASI</th>
+                        <th>MASA BERLAKU</th>
+                        <th>SISA WAKTU</th>
+                        <th>STATUS SERTIFIKAT</th>
                     </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php else: ?>
-            <p>Data tidak ditemukan.</p>
-        <?php endif; ?>
+                    <?php $no = 1; ?>
+                    <?php foreach ($results as $row): ?>
+                        <tr>
+                            <td class="nomor"><?= $no++ ?></td>
+                            <td><?= htmlspecialchars($row['NAMA OBAT']); ?></td>
+                            <td><?= htmlspecialchars($row['NAMA PERUSAHAAN']); ?></td>
+                            <td><?= htmlspecialchars($row['ALAMAT']); ?></td>
+                            <td><?= htmlspecialchars($row['PROVINSI']); ?></td>
+                            <td><?= htmlspecialchars($row['JENIS PERUSAHAAN']); ?></td>
+                            <td><?= htmlspecialchars($row['NOMOR PENDAFTARAN']); ?></td>
+                            <td><?= htmlspecialchars($row['ASAL OBAT']); ?></td>
+                            <td><?= htmlspecialchars($row['GOLONGAN OBAT']); ?></td>
+                            <td><?= htmlspecialchars($row['BENTUK SEDIAAN']); ?></td>
+                            <td><?= htmlspecialchars($row['JENIS SEDIAAN']); ?></td>
+                            <td><?= htmlspecialchars($row['KOMPOSISI']); ?></td>
+                            <td><?= htmlspecialchars($row['INDIKASI']); ?></td>
+                            <td><?= htmlspecialchars($row['MASA BERLAKU']); ?></td>
+                            <td><?= htmlspecialchars($row['SISA WAKTU']); ?></td>
+                            <td><?= htmlspecialchars($row['STATUS SERTIFIKAT']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php else: ?>
+                <p>Data tidak ditemukan.</p>
+            <?php endif; ?>
+        </div>
 
         <div class="footer">
             <p>&copy; 2024 Semua Hak Cipta Dilindungi.</p>
