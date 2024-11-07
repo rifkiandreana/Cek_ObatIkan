@@ -193,9 +193,9 @@
                         <option value="Farmasetik">Farmasetik</option>
                         <option value="Premiks">Premiks</option>
                         <option value="Probiotik">Probiotik</option>
-                        <option value="Biologik (kit diagnostic)">Biologik (kit diagnostic)</option>
-                        <option value="Biologik (vaksin)">Biologik (vaksin)</option>
-                        <option value="Obat alami/herbal">Obat alami/herbal</option>
+                        <option value="Biologik (Kit Diagnostic)">Biologik (kit diagnostic)</option>
+                        <option value="Biologik (Vaksin)">Biologik (vaksin)</option>
+                        <option value="Obat Alami/Herbal">Obat alami/herbal</option>
                     </select>
                 </div>
                 <div>
