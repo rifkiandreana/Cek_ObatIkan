@@ -273,7 +273,7 @@ function formatDate($date) {
                 
                 <div class="form-group">
                     <label>Jenis Sediaan:</label>
-                    <select name="jenis_Sediaan" class="input-field" required>
+                    <select name="jenis_sediaan" class="input-field" required>
                         <option value="">Pilih Jenis Sediaan...</option>
                         <?php
                         $jenis_Sediaan_list = [
@@ -284,9 +284,9 @@ function formatDate($date) {
                             "Biologik (Vaksin)",
                             "Obat Alami/Herbal",
                         ];
-                        foreach ($jenis_Sediaan_list as $jenis_Sediaan) {
-                            $selected = ($row['JENIS SEDIAAN'] == $jenis_Sediaan) ? 'selected' : '';
-                            echo "<option value=\"$jenis_Sediaan\" $selected>$jenis_Sediaan</option>";
+                        foreach ($jenis_Sediaan_list as $jenis_sediaan) {
+                            $selected = ($row['JENIS SEDIAAN'] == $jenis_sediaan) ? 'selected' : '';
+                            echo "<option value=\"$jenis_sediaan\" $selected>$jenis_sediaan</option>";
                         }
                         ?>
                     </select>
