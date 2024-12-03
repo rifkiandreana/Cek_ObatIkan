@@ -1,264 +1,157 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pencarian Obat Ikan</title>
-    <style>
-        /* Reset CSS */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="Data/bpkil.png" type="image/x-icon">
+  <title>BPKIL | Pencarian Ikan </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-        body {
-            background-color: #e0f7fa;
-            font-family: Arial, sans-serif;
-        }
+  .card-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 20px;
+  }
 
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #00796b;
-            color: white;
-            padding: 10px 20px;
-        }
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-        .navbar .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-        .navbar .time {
-            font-size: 1em;
-        }
+  .card {
+    width: 23rem;
+    height: 15rem;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+  }
 
-        /* Container */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
+  .card:hover {
+    transform: translateY(-10px);
+  }
 
-        /* Form Style */
-        form label {
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-            text-align: left;
-        }
-        form input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1em;
-        }
-        /* CSS untuk menyamakan ukuran input dan select */
-        .input-field {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1em;
-        }
+  .card-body {
+    padding: 30px;
+  }
 
-        #main_keyword {
-            font-size: 1.2em;
-            padding: 12px;
-            margin-bottom: 20px;
-        }
-        
-        /* Grid for Additional Filters */
-        .additional-filters {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
+  .card-body i {
+    font-size: 80px;
+    color: #00796b;
+    margin-bottom: 20px;
+  }
 
-        /* Submit Button */
-        button[type="submit"] {
-            background-color: #00796b;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-size: 1em;
-            cursor: pointer;
-        }
-        button[type="submit"]:hover {
-            background-color: #45a049;
-        }
+  .card-body h5 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #00796b;
+  }
 
-        /* Footer */
-        .footer {
-            background-color: #00796b;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
+  .section-title {
+    color: #1e2a3a;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+  }
 
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .card-container {
+      gap: 20px;
+    }
 
-    <script>
-        // Fungsi untuk menampilkan tanggal dan waktu
-        function showDateTime() {
-            const timeElement = document.getElementById("time");
-            const now = new Date();
-            
-            // Format tanggal dan waktu
-            const tanggal = now.toLocaleDateString("id-ID", { day: '2-digit', month: 'long', year: 'numeric' });
-            const waktu = now.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' });
-            
-            // Tampilkan tanggal dan waktu
-            timeElement.textContent = `${tanggal} ${waktu}`;
-        }
-        
-        setInterval(showDateTime, 1000);  // Update tanggal dan waktu setiap detik
-    </script>
+    .card {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .card-body i {
+      font-size: 60px;
+    }
+
+    .card-body h5 {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .card-body i {
+      font-size: 50px;
+    }
+
+    .card-body h5 {
+      font-size: 16px;
+    }
+  }
+</style>
 
 </head>
 <body>
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <img src="Data/bpkil.png" alt="Logo"> <!-- Ganti dengan path logo -->
-            <span>Balai Pengujian Kesehatan ikan dan Lingkungan | Serang</span>
+
+  <h2 class="section-title">BPKIL | Smarth Pencarian</h2>
+
+  <div class="card-container">
+    <!-- Card 1 -->
+    <a href="cekobat.php" target="_blank" style="text-decoration: none; color: inherit;">
+    <div class="card">
+        <div class="card-body">
+        <i class="bi bi-clipboard2-fill"></i>
+        <h5 class="card-title">Merk dan Registrasi</h5>
         </div>
-        <div class="time" id="time"></div>
     </div>
+    </a>
 
-    <!-- Container -->
-    <div class="container">
-        <h1>Pencarian Data Obat Ikan</h1>
-        <form action="hasil.php" method="get">
-            <!-- Kolom Pencarian Utama -->
-            <label for="main_keyword">Cari Berdasarkan Nama Obat atau Nomor Pendaftaran:</label>
-            <input type="text" name="main_keyword" id="main_keyword" placeholder="Masukkan nama obat atau nomor pendaftaran..."><br>
 
-            <!-- Kolom Filter Tambahan -->
-            <div class="additional-filters">
-                <div>
-                    <label for="komposisi">Komposisi:</label>
-                    <input type="text" name="komposisi" id="komposisi" placeholder="Masukkan komposisi...">
-                </div>
-                <div>
-                    <label for="indikasi">Indikasi:</label>
-                    <input type="text" name="indikasi" id="indikasi" placeholder="Masukkan indikasi...">
-                </div>
-                <div>
-                    <label for="nama_perusahaan">Nama Perusahaan:</label>
-                    <input type="text" name="nama_perusahaan" id="nama_perusahaan" placeholder="Masukkan nama perusahaan...">
-                </div>
-                <div>
-                    <label for="golongan_obat">Golongan Obat:</label>
-                    <select name="golongan_obat" id="golongan_obat" class="input-field">
-                        <option value="">Pilih Golongan Obat...</option>
-                        <option value="Obat Keras">Obat Keras</option>
-                        <option value="Obat Bebas Terbatas">Obat Bebas Terbatas</option>
-                        <option value="Obat Bebas">Obat Bebas</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="bentuk_sediaan">Bentuk Sediaan:</label>
-                    <select name="bentuk_sediaan" id="bentuk_sediaan" class="input-field">
-                        <option value="">Pilih Bentuk Sediaan...</option>
-                        <option value="Cair">Cair</option>
-                        <option value="Kit">Kit</option>
-                        <option value="Padat">Padat</option>
-                        <option value="Serbuk">Serbuk</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="jenis_sediaan">Jenis Sediaan:</label>
-                    <select name="jenis_sediaan" id="jenis_sediaan" class="input-field">
-                        <option value="">Pilih Jenis Sediaan...</option>
-                        <option value="Farmasetik">Farmasetik</option>
-                        <option value="Premiks">Premiks</option>
-                        <option value="Probiotik">Probiotik</option>
-                        <option value="Biologik (Kit Diagnostic)">Biologik (kit diagnostic)</option>
-                        <option value="Biologik (Vaksin)">Biologik (vaksin)</option>
-                        <option value="Obat Alami/Herbal">Obat alami/herbal</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="provinsi">Provinsi:</label>
-                    <select name="provinsi" id="provinsi" class="input-field">
-                        <option value="">Pilih Provinsi...</option>
-                        <option value="Nanggroe Aceh Darussalam">Nanggroe Aceh Darussalam</option>
-                        <option value="Sumatera Utara">Sumatera Utara</option>
-                        <option value="Sumatera Barat">Sumatera Barat</option>
-                        <option value="Riau">Riau</option>
-                        <option value="Kepulauan Riau">Kepulauan Riau</option>
-                        <option value="Jambi">Jambi</option>
-                        <option value="Bengkulu">Bengkulu</option>
-                        <option value="Sumatera Selatan">Sumatera Selatan</option>
-                        <option value="Kepulauan Bangka Belitung">Kepulauan Bangka Belitung</option>
-                        <option value="Lampung">Lampung</option>
-                        <option value="Banten">Banten</option>
-                        <option value="DKI Jakarta">DKI Jakarta</option>
-                        <option value="Jawa Barat">Jawa Barat</option>
-                        <option value="Jawa Tengah">Jawa Tengah</option>
-                        <option value="DI Yogyakarta">DI Yogyakarta</option>
-                        <option value="Jawa Timur">Jawa Timur</option>
-                        <option value="Bali">Bali</option>
-                        <option value="Nusa Tenggara Barat">Nusa Tenggara Barat</option>
-                        <option value="Nusa Tenggara Timur">Nusa Tenggara Timur</option>
-                        <option value="Kalimantan Barat">Kalimantan Barat</option>
-                        <option value="Kalimantan Tengah">Kalimantan Tengah</option>
-                        <option value="Kalimantan Selatan">Kalimantan Selatan</option>
-                        <option value="Kalimantan Timur">Kalimantan Timur</option>
-                        <option value="Kalimantan Utara">Kalimantan Utara</option>
-                        <option value="Sulawesi Utara">Sulawesi Utara</option>
-                        <option value="Sulawesi Tengah">Sulawesi Tengah</option>
-                        <option value="Sulawesi Selatan">Sulawesi Selatan</option>
-                        <option value="Sulawesi Barat">Sulawesi Barat</option>
-                        <option value="Sulawesi Tenggara">Sulawesi Tenggara</option>
-                        <option value="Gorontalo">Gorontalo</option>
-                        <option value="Maluku">Maluku</option>
-                        <option value="Maluku Utara">Maluku Utara</option>
-                        <option value="Papua">Papua</option>
-                        <option value="Papua Barat">Papua Barat</option>
-                        <option value="Papua Tengah">Papua Tengah</option>
-                        <option value="Papua Pegunungan">Papua Pegunungan</option>
-                        <option value="Papua Selatan">Papua Selatan</option>
-                        <option value="Papua Barat Daya">Papua Barat Daya</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="status_sertifikat">Status Sertifikat:</label>
-                    <select name="status_sertifikat" id="status_sertifikat" class="input-field">
-                        <option value="">Pilih Jenis Sediaan...</option>
-                        <option value="Berlaku">Berlaku</option>
-                        <option value="Kadaluarsa">Kadaluarsa</option>
-                    </select>
-                </div>
-            </div>
-
-            <button type="submit">Cari</button>
-        </form>
+    <!-- Card 2 -->
+    <a href="ceknamaobat.php" target="_blank" style="text-decoration: none; color: inherit;">
+    <div class="card">
+      <div class="card-body">
+        <i class="bi bi-clipboard2-heart-fill"></i>
+        <h5 class="card-title">Tanya Obat Ikan</h5>
+      </div>
     </div>
+    </a>
 
-    <!-- Footer -->
-    <div class="footer">
-        &copy; <?php echo date("Y"); ?> Semua Hak Cipta Dilindungi.
+    <!-- Card 3 -->
+    <a href="cekobat.php" target="_blank" style="text-decoration: none; color: inherit;">
+    <div class="card">
+      <div class="card-body">
+        <i class="bi bi-clipboard2-heart"></i>
+        <h5 class="card-title">Daftar Perusahaan</h5>
+      </div>
     </div>
+    </a>
+  </div>
+
+  <!-- Bootstrap 5 & Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
 </body>
 </html>

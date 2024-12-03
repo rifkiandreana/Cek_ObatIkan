@@ -87,6 +87,7 @@ if ($status_sertifikat) {
         die();
     }
 
+//vendor/setasign/fpdf/fpdf.php
     // Fungsi untuk membuat PDF
     function generatePDF($results) {
         require('vendor/setasign/fpdf/fpdf.php');
@@ -182,23 +183,14 @@ if ($status_sertifikat) {
     
     
     
-    
+
+    // Cek jika ada permintaan untuk mengunduh PDF
     if (isset($_GET['download_pdf'])) {
-        // Pastikan data telah diurutkan sebelum mengirim ke fungsi generatePDF
-        if (isset($_GET['order_by'])) {
-            $orderBy = $_GET['order_by'];
-            if ($orderBy === 'nama_obat') {
-                usort($results, fn($a, $b) => strcmp($a['NAMA OBAT'], $b['NAMA OBAT']));
-            } elseif ($orderBy === 'sisa_waktu') {
-                usort($results, fn($a, $b) => (int)$b['SISA WAKTU'] - (int)$a['SISA WAKTU']);
-            }
-        }
-    
         generatePDF($results);
-        exit;
+        exit; // Hentikan eksekusi setelah PDF dihasilkan
     }
-    
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -207,183 +199,195 @@ if ($status_sertifikat) {
     <title>Hasil Pencarian Obat Ikan</title>
     <style>
         body {
-            background-color: #e0f7fa;
-            font-family: Arial, sans-serif;
-        }
+    background-color: #e0f7fa;
+    font-family: Arial, sans-serif;
+    }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #00796b;
-            color: #fff;
-            border-radius: 6px;
-        }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px; /* Menambah padding horizontal */
+        background-color: #00796b;
+        color: #fff;
+        border-radius: 6px;
+        width: calc(100% - 40px); /* Menyesuaikan lebar agar sejajar dengan tabel */
+        box-sizing: border-box;
+        margin: 0 auto; /* Mengatur agar header berada di tengah */
+    }
 
-        .logo img {
-            width: 100px;
-            height: auto;
-        }
+    .logo img {
+        width: 100px;
+        height: auto;
+    }
 
-        .time {
-            font-size: 14px;
-            font-weight: bold;
-        }
+    .time {
+        font-size: 14px;
+        font-weight: bold;
+    }
 
-        .container {
-            margin: 20px auto;
-            max-width: 100%;
-        }
+    .container {
+        width: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        max-width: 100%; /* Menjaga lebar kontainer tidak melebihi tampilan */
+    }
 
-        .table-container {
-            max-height: 500px;
-            overflow-y: auto;
-            margin-top: 10px;
-        }
+    .table-container {
+        max-height: 500px; /* Batas tinggi kontainer tabel */
+        overflow-y: auto; /* Scroll jika konten melebihi tinggi */
+        overflow-x: hidden; /* Mencegah scroll horizontal */
+        border-radius: 6px; /* Sudut yang melengkung */
+        margin-top: 10px;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #ffffff;
-            margin-top: 20px;
-        }
+    table {
+        width: 100%; /* Memastikan tabel mengisi kontainer */
+        table-layout: fixed; /* Membuat kolom memiliki lebar tetap */
+        border-collapse: collapse;
+        background-color: #ffffff;
+        margin-top: 20px;
+    }
 
+    th, td {
+        text-align: left;
+        padding: 10px;
+        border: 1px solid #ddd;
+        font-size: 12px;
+        word-wrap: break-word; /* Memastikan teks tidak meluber ke luar kolom */
+    }
+
+    th {
+        background-color: #009688;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .nomor {
+        width: 2%;
+        text-align: center;
+    }
+
+    .sisawaktu {
+        width: 3%;
+        text-align: center;
+    }
+
+    .footer {
+        margin-top: 20px; /* Mengurangi jarak antara footer dan tabel */
+        text-align: center;
+        color: #555;
+        font-size: 14px;
+    }
+
+    .btn-download, .btn-kembali {
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        text-decoration: none;
+    }
+
+    .btn-download {
+        background-color: #00796b;
+        color: #fff;
+    }
+
+    .btn-download:hover {
+        background-color: #004d40;
+    }
+
+    .btn-kembali {
+        display: inline-block;
+        background-color: red;
+        color: white;
+        border: none;
+    }
+
+    .btn-kembali a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .btn-kembali:hover {
+        background-color: darkred;
+    }
+
+    /* Media Queries untuk Responsivitas */
+    @media (max-width: 768px) {
         th, td {
-            text-align: left;
-            padding: 10px;
-            border: 1px solid #ddd;
-            font-size: 12px;
+            font-size: 10px; /* Ukuran font lebih kecil untuk perangkat kecil */
+            padding: 5px; /* Mengurangi padding */
         }
+    }
 
-        th {
-            background-color: #009688;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .btn-download, .btn-kembali, .filter-select {
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            text-decoration: none;
-        }
-
-        .btn-download {
-            background-color: #00796b;
-            color: #fff;
-        }
-
-        .btn-download:hover {
-            background-color: #004d40;
-        }
-
-        .btn-kembali {
-            background-color: red;
-            color: white;
-        }
-
-        .btn-kembali a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .btn-kembali:hover {
-            background-color: darkred;
-        }
-
-        .filter-select {
-            background-color: #009688;
-            color: #fff;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            th, td {
-                font-size: 10px;
-                padding: 5px;
-            }
-
-            table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-        }
     </style>
+
     <script>
+        // Fungsi untuk menampilkan tanggal dan waktu
         function showDateTime() {
             const timeElement = document.getElementById("time");
             const now = new Date();
+            
+            // Format tanggal dan waktu
             const tanggal = now.toLocaleDateString("id-ID", { day: '2-digit', month: 'long', year: 'numeric' });
             const waktu = now.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' });
+            
+            // Tampilkan tanggal dan waktu
             timeElement.textContent = `${tanggal} ${waktu}`;
         }
-        setInterval(showDateTime, 1000);
-
-        function sortTable(columnIndex, isDate = false, isNumeric = false) {
-            const table = document.getElementById("dataTable");
-            const rows = Array.from(table.rows).slice(1);
-
-            rows.sort((a, b) => {
-                const aText = a.cells[columnIndex].textContent.trim().toLowerCase();
-                const bText = b.cells[columnIndex].textContent.trim().toLowerCase();
-
-                if (isDate) {
-                    const aDate = new Date(aText);
-                    const bDate = new Date(bText);
-                    return aDate - bDate;
-                } else if (isNumeric) {
-                    const aNum = parseFloat(aText) || 0;
-                    const bNum = parseFloat(bText) || 0;
-                    return bNum - aNum;
-                }
-
-                return aText.localeCompare(bText);
-            });
-
-            const tbody = table.querySelector("tbody");
-            tbody.innerHTML = "";
-            rows.forEach(row => tbody.appendChild(row));
-        }
+        
+        setInterval(showDateTime, 1000);  // Update tanggal dan waktu setiap detik
     </script>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">
-                <img src="Data/bpkil.png" alt="Logo Obat Ikan">
+        <!-- <div class="table-container"> -->
+            <div class="header">
+                <div class="logo">
+                    <img src="Data/bpkil.png" alt="Logo Obat Ikan">
+                </div>
+                <div class="time" id="time"></div>
             </div>
-            <div class="time" id="time"></div>
-        </div>
+        <!-- </div> -->
 
         <h1 style="text-align: center;">Hasil Pencarian Obat Ikan</h1>
 
-        <form action="" method="get">
-            <input type="hidden" name="main_keyword" value="<?= htmlspecialchars($main_keyword); ?>">
-            <input type="hidden" name="order_by" value="<?= isset($_GET['order_by']) ? htmlspecialchars($_GET['order_by']) : ''; ?>">
-            <button type="submit" name="download_pdf" class="btn-download">Unduh Hasil Pencarian</button>
-        </form>
-
-
         <button type="submit" class="btn-kembali">
-            <a href="cekobat.php">Kembali</a>
+             <a href="ceknamaobat.php">Kembali</a>
         </button>
-        <select class="filter-select" onchange="this.value === 'nama_obat' ? sortTable(0) : sortTable(13, false, true);">
-            <option value="">Urutkan</option>
-            <option value="nama_obat">Nama Obat</option>
-            <option value="sisa_waktu">Sisa Waktu</option>
-        </select>
 
-        <div class="table-container">
-            <table id="dataTable">
-                <thead>
+        
+
+            <form action="" method="get">
+                <input type="hidden" name="main_keyword" value="<?= htmlspecialchars($main_keyword); ?>">
+                <!-- Add other hidden inputs for search criteria as before -->
+                <input type="hidden" name="main_keyword" value="<?= htmlspecialchars($main_keyword); ?>">
+                <input type="hidden" name="nama_perusahaan" value="<?= htmlspecialchars($nama_perusahaan); ?>">
+                <input type="hidden" name="alamat" value="<?= htmlspecialchars($alamat); ?>">
+                <input type="hidden" name="provinsi" value="<?= htmlspecialchars($provinsi); ?>">
+                <input type="hidden" name="jenis_perusahaan" value="<?= htmlspecialchars($jenis_perusahaan); ?>">
+                <input type="hidden" name="asal_obat" value="<?= htmlspecialchars($asal_obat); ?>">
+                <input type="hidden" name="golongan_obat" value="<?= htmlspecialchars($golongan_obat); ?>">
+                <input type="hidden" name="bentuk_sediaan" value="<?= htmlspecialchars($bentuk_sediaan); ?>">
+                <input type="hidden" name="jenis_sediaan" value="<?= htmlspecialchars($jenis_sediaan); ?>">
+                <input type="hidden" name="komposisi" value="<?= htmlspecialchars($komposisi); ?>">
+                <input type="hidden" name="indikasi" value="<?= htmlspecialchars($indikasi); ?>">
+                <input type="hidden" name="status_sertifikat" value="<?= htmlspecialchars($status_sertifikat); ?>">
+                <button type="submit" name="download_pdf" class="btn-download">Unduh Hasil Pencararian</button>
+            </form>
+        
+        
+        <div class="table-container">    
+
+            <?php if (count($results) > 0): ?>
+                <table>
                     <tr>
+                        <th class="nomor">NO</th>
                         <th>NAMA OBAT</th>
                         <th>NAMA PERUSAHAAN</th>
                         <th>ALAMAT</th>
@@ -400,10 +404,10 @@ if ($status_sertifikat) {
                         <th>SISA WAKTU</th>
                         <th>STATUS SERTIFIKAT</th>
                     </tr>
-                </thead>
-                <tbody>
+                    <?php $no = 1; ?>
                     <?php foreach ($results as $row): ?>
                         <tr>
+                            <td class="nomor"><?= $no++ ?></td>
                             <td><?= htmlspecialchars($row['NAMA OBAT']); ?></td>
                             <td><?= htmlspecialchars($row['NAMA PERUSAHAAN']); ?></td>
                             <td><?= htmlspecialchars($row['ALAMAT']); ?></td>
@@ -417,18 +421,19 @@ if ($status_sertifikat) {
                             <td><?= htmlspecialchars($row['KOMPOSISI']); ?></td>
                             <td><?= htmlspecialchars($row['INDIKASI']); ?></td>
                             <td><?= htmlspecialchars($row['MASA BERLAKU']); ?></td>
-                            <td><?= htmlspecialchars($row['SISA WAKTU']); ?></td>
+                            <td class="sisawaktu"><?= htmlspecialchars($row['SISA WAKTU']); ?></td>
                             <td><?= htmlspecialchars($row['STATUS SERTIFIKAT']); ?></td>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
+                </table>
+            <?php else: ?>
+                <p>Data tidak ditemukan.</p>
+            <?php endif; ?>
         </div>
+
         <div class="footer">
             <p>&copy; 2024 Semua Hak Cipta Dilindungi.</p>
         </div>
     </div>
 </body>
 </html>
-
-

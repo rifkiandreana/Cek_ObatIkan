@@ -231,7 +231,7 @@ function formatDate($date) {
                         <option value="">Pilih Asal Obat...</option>
                         <?php
                         $asal_obat_list = [
-                            "Importir", "Dalam Negeri", 
+                            "Impor", "Dalam Negeri", 
                         ];
                         foreach ($asal_obat_list as $asal_obat) {
                             $selected = ($row['ASAL OBAT'] == $asal_obat) ? 'selected' : '';
