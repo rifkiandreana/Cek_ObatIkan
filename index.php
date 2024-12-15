@@ -69,6 +69,33 @@
     text-align: center;
   }
 
+  .tooltip-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip-container .tooltip-text {
+      visibility: hidden;
+      width: 200px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 5px 10px;
+      position: absolute;
+      z-index: 1;
+      bottom: 95%; /* Sesuaikan dengan posisi tooltip */
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+  }
+
+  .tooltip-container:hover .tooltip-text {
+      visibility: visible;
+      opacity: 6;
+  }
+
   /* Media Queries for Responsiveness */
   @media (max-width: 768px) {
     .card-container {
@@ -118,18 +145,18 @@
 
   <div class="card-container">
     <!-- Card 1 -->
-    <a href="cekobat.php" target="_blank" style="text-decoration: none; color: inherit;">
+    <a href="cekobat.php" target="_blank" style="text-decoration: none; color: inherit;" data-bs-toggle="tooltip" data-bs-placement="top" title="Klik untuk melihat informasi merk dan registrasi obat ikan.">
     <div class="card">
         <div class="card-body">
-        <i class="bi bi-clipboard2-fill"></i>
-        <h5 class="card-title">Merk dan Registrasi</h5>
+            <i class="bi bi-clipboard2-fill"></i>
+            <h5 class="card-title">Merk dan Registrasi</h5>
         </div>
     </div>
     </a>
 
 
     <!-- Card 2 -->
-    <a href="ceknamaobat.php" target="_blank" style="text-decoration: none; color: inherit;">
+    <a href="ceknamaobat.php" target="_blank" style="text-decoration: none; color: inherit;" data-bs-toggle="tooltip" data-bs-placement="top" title="Klik untuk melihat informasi komposisi, indikasi, nama perusahaan, golongan, bentuk dan jenis sediaan obat, sisa waktu serta status sertifikasi.">
     <div class="card">
       <div class="card-body">
         <i class="bi bi-clipboard2-heart-fill"></i>
@@ -139,7 +166,7 @@
     </a>
 
     <!-- Card 3 -->
-    <a href="cekobat.php" target="_blank" style="text-decoration: none; color: inherit;">
+    <a href="cekobat.php" target="_blank" style="text-decoration: none; color: inherit;" data-bs-toggle="tooltip" data-bs-placement="top" title="Klik untuk melihat informasi detail perusahaan obat ikan.">
     <div class="card">
       <div class="card-body">
         <i class="bi bi-clipboard2-heart"></i>
@@ -152,6 +179,16 @@
   <!-- Bootstrap 5 & Icons -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <script>    
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                new bootstrap.Tooltip(tooltipTriggerEl, {
+                    trigger: 'hover focus', // Tooltip aktif pada hover dan focus
+                });
+            });
+        });
+  </script>
 
 </body>
 </html>
