@@ -1,70 +1,67 @@
 <?php
-include 'koneksi.php';
+    session_start();
+    include 'koneksi.php';
 
-$no = $_GET['no'];
-
-// Ambil data dari database berdasarkan ID
-$result = $conn->query("SELECT * FROM obat_ikan WHERE NO=$no");
-$row = $result->fetch_assoc();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari form
     $no = $_GET['no'];
-    $nama_obat = $_POST['nama_obat'];
-    $nama_perusahaan = $_POST['nama_perusahaan'];
-    $alamat = $_POST['alamat'];
-    $provinsi = $_POST['provinsi'];
-    $jenis_perusahaan = $_POST['jenis_perusahaan'];
-    $nomor_pendaftaran = $_POST['nomor_pendaftaran'];
-    $asal_obat = $_POST['asal_obat'];
-    $golongan_obat = $_POST['golongan_obat'];
-    $bentuk_sediaan = $_POST['bentuk_sediaan'];
-    $jenis_sediaan = $_POST['jenis_sediaan'];
-    $komposisi = $_POST['komposisi'];
-    $indikasi = $_POST['indikasi'];
-    $masa_berlaku = $_POST['masa_berlaku'];
 
-    // Format tanggal ke d-M-Y sebelum disimpan
-    $masa_berlaku_date = new DateTime($masa_berlaku);
-    $masa_berlaku_formatted = $masa_berlaku_date->format('d-M-Y');
+    // Ambil data dari database berdasarkan ID
+    $result = $conn->query("SELECT * FROM obat_ikan WHERE NO=$no");
+    $row = $result->fetch_assoc();
 
-    // Hitung sisa waktu dan status sertifikat
-    $today = new DateTime();
-    $sisa_waktu = $masa_berlaku_date->diff($today)->days;
-    $status_sertifikat = ($masa_berlaku_date < $today) ? 'Kadaluarsa' : 'Berlaku';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Ambil data dari form
+        $no = $_GET['no'];
+        $nama_obat = $_POST['nama_obat'];
+        $nama_perusahaan = $_POST['nama_perusahaan'];
+        $alamat = $_POST['alamat'];
+        $provinsi = $_POST['provinsi'];
+        $jenis_perusahaan = $_POST['jenis_perusahaan'];
+        $nomor_pendaftaran = $_POST['nomor_pendaftaran'];
+        $asal_obat = $_POST['asal_obat'];
+        $golongan_obat = $_POST['golongan_obat'];
+        $bentuk_sediaan = $_POST['bentuk_sediaan'];
+        $jenis_sediaan = $_POST['jenis_sediaan'];
+        $komposisi = $_POST['komposisi'];
+        $indikasi = $_POST['indikasi'];
+        $masa_berlaku = $_POST['masa_berlaku'];
+    
+        // Hitung sisa waktu dan status sertifikat
+        $today = new DateTime();
+        $masa_berlaku_date = new DateTime($masa_berlaku);
+        $sisa_waktu = $masa_berlaku_date->diff($today)->days;
+        $status_sertifikat = ($masa_berlaku_date < $today) ? 'Kadaluarsa' : 'Berlaku';
+    
+        // Update data di database
+        $sql = "UPDATE obat_ikan SET 
+                `NAMA OBAT`='$nama_obat', 
+                `NAMA PERUSAHAAN`='$nama_perusahaan', 
+                `ALAMAT`='$alamat', 
+                `PROVINSI`='$provinsi', 
+                `JENIS PERUSAHAAN`='$jenis_perusahaan', 
+                `NOMOR PENDAFTARAN`='$nomor_pendaftaran', 
+                `ASAL OBAT`='$asal_obat', 
+                `GOLONGAN OBAT`='$golongan_obat', 
+                `BENTUK SEDIAAN`='$bentuk_sediaan', 
+                `JENIS SEDIAAN`='$jenis_sediaan', 
+                `KOMPOSISI`='$komposisi', 
+                `INDIKASI`='$indikasi', 
+                `MASA BERLAKU`='$masa_berlaku',
+                `SISA WAKTU`='$sisa_waktu',
+                `STATUS SERTIFIKAT`='$status_sertifikat'
+            WHERE `NO`=$no";
+    
+        if ($conn->query($sql) === TRUE) {
+            header("Location: Dashboard/tables.php");
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
     
 
-    // Update data di database
-    $sql = "UPDATE obat_ikan SET 
-            `NAMA OBAT`='$nama_obat', 
-            `NAMA PERUSAHAAN`='$nama_perusahaan', 
-            `ALAMAT`='$alamat', 
-            `PROVINSI`='$provinsi', 
-            `JENIS PERUSAHAAN`='$jenis_perusahaan', 
-            `NOMOR PENDAFTARAN`='$nomor_pendaftaran', 
-            `ASAL OBAT`='$asal_obat', 
-            `GOLONGAN OBAT`='$golongan_obat', 
-            `BENTUK SEDIAAN`='$bentuk_sediaan', 
-            `JENIS SEDIAAN`='$jenis_sediaan', 
-            `KOMPOSISI`='$komposisi', 
-            `INDIKASI`='$indikasi', 
-            `MASA BERLAKU`='$masa_berlaku_formatted',
-            `SISA WAKTU`='$sisa_waktu',
-            `STATUS SERTIFIKAT`='$status_sertifikat'
-        WHERE `NO`=$no";
-            
-
-    if ($conn->query($sql) === TRUE) {
-        header("Location: DataObat.php");
-        exit();
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+    function formatDate($date) {
+        return date('d-M-Y', strtotime($date));
     }
-}
-
-function formatDate($date) {
-    return date('d-M-Y', strtotime($date));
-}
 ?>
 
 <!DOCTYPE html>
@@ -306,14 +303,15 @@ function formatDate($date) {
                 
                 <div class="form-group">
                     <label>Masa Berlaku:</label>
-                    <input type="date" name="masa_berlaku" value="<?= htmlspecialchars(date('Y-m-d', strtotime($row['MASA BERLAKU']))) ?>" required>
-                    <small>(Sebelumnya: <?= formatDate($row['MASA BERLAKU']) ?>)</small>
+                    <input type="date" name="masa_berlaku" value="<?= htmlspecialchars($row['MASA BERLAKU']) ?>" required>
+                    <small>(Sebelumnya: <?= htmlspecialchars($row['MASA BERLAKU']) ?>)</small>
                 </div>
+
             </div>
             <button type="submit">Update</button>
         </form>
         <div class="back-link">
-            <a href="DataObat.php">Kembali</a>
+            <a href="Dashboard/tables.php">Kembali</a>
         </div>
     </div>
 </body>

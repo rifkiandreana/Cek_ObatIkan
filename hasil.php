@@ -1,80 +1,80 @@
 <?php
-// Konfigurasi koneksi ke database
-$host = 'localhost';
-$dbname = 'cek_obat_ikan';
-$username = 'root';
-$password = '';
+    // Konfigurasi koneksi ke database
+    $host = 'localhost';
+    $dbname = 'cek_obat_ikan';
+    $username = 'root';
+    $password = '';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Ambil input pencarian dari form
-    $main_keyword = isset($_GET['main_keyword']) ? $_GET['main_keyword'] : '';
-    $nama_perusahaan = isset($_GET['nama_perusahaan']) ? $_GET['nama_perusahaan'] : '';
-    $alamat = isset($_GET['alamat']) ? $_GET['alamat'] : '';
-    $provinsi = isset($_GET['provinsi']) ? $_GET['provinsi'] : '';
-    $jenis_perusahaan = isset($_GET['jenis_perusahaan']) ? $_GET['jenis_perusahaan'] : '';
-    $asal_obat = isset($_GET['asal_obat']) ? $_GET['asal_obat'] : '';
-    $golongan_obat = isset($_GET['golongan_obat']) ? $_GET['golongan_obat'] : '';
-    $bentuk_sediaan = isset($_GET['bentuk_sediaan']) ? $_GET['bentuk_sediaan'] : '';
-    $jenis_sediaan = isset($_GET['jenis_sediaan']) ? $_GET['jenis_sediaan'] : '';
-    $komposisi = isset($_GET['komposisi']) ? $_GET['komposisi'] : '';
-    $indikasi = isset($_GET['indikasi']) ? $_GET['indikasi'] : '';
-    $status_sertifikat = isset($_GET['status_sertifikat']) ? $_GET['status_sertifikat'] : '';
+        // Ambil input pencarian dari form
+        $main_keyword = isset($_GET['main_keyword']) ? $_GET['main_keyword'] : '';
+        $nama_perusahaan = isset($_GET['nama_perusahaan']) ? $_GET['nama_perusahaan'] : '';
+        $alamat = isset($_GET['alamat']) ? $_GET['alamat'] : '';
+        $provinsi = isset($_GET['provinsi']) ? $_GET['provinsi'] : '';
+        $jenis_perusahaan = isset($_GET['jenis_perusahaan']) ? $_GET['jenis_perusahaan'] : '';
+        $asal_obat = isset($_GET['asal_obat']) ? $_GET['asal_obat'] : '';
+        $golongan_obat = isset($_GET['golongan_obat']) ? $_GET['golongan_obat'] : '';
+        $bentuk_sediaan = isset($_GET['bentuk_sediaan']) ? $_GET['bentuk_sediaan'] : '';
+        $jenis_sediaan = isset($_GET['jenis_sediaan']) ? $_GET['jenis_sediaan'] : '';
+        $komposisi = isset($_GET['komposisi']) ? $_GET['komposisi'] : '';
+        $indikasi = isset($_GET['indikasi']) ? $_GET['indikasi'] : '';
+        $status_sertifikat = isset($_GET['status_sertifikat']) ? $_GET['status_sertifikat'] : '';
 
-    // Bangun query dengan kondisi dinamis
-    $query = "SELECT * FROM obat_ikan WHERE 1=1";
-$params = [];
+        // Bangun query dengan kondisi dinamis
+        $query = "SELECT * FROM obat_ikan WHERE 1=1";
+    $params = [];
 
-if ($main_keyword) {
-    $query .= " AND (`NAMA OBAT` LIKE :main_keyword OR `NOMOR PENDAFTARAN` LIKE :main_keyword)";
-    $params[':main_keyword'] = "%$main_keyword%";
-}
-if ($nama_perusahaan) {
-    $query .= " AND `NAMA PERUSAHAAN` LIKE :nama_perusahaan";
-    $params[':nama_perusahaan'] = "%$nama_perusahaan%";
-}
-if ($alamat) {
-    $query .= " AND `ALAMAT` LIKE :alamat";
-    $params[':alamat'] = "%$alamat%";
-}
-if ($provinsi) {
-    $query .= " AND `PROVINSI` LIKE :provinsi";
-    $params[':provinsi'] = "%$provinsi%";
-}
-if ($jenis_perusahaan) {
-    $query .= " AND `JENIS PERUSAHAAN` LIKE :jenis_perusahaan";
-    $params[':jenis_perusahaan'] = "%$jenis_perusahaan%";
-}
-if ($asal_obat) {
-    $query .= " AND `ASAL OBAT` LIKE :asal_obat";
-    $params[':asal_obat'] = "%$asal_obat%";
-}
-if ($golongan_obat) {
-    $query .= " AND `GOLONGAN OBAT` LIKE :golongan_obat";
-    $params[':golongan_obat'] = "%$golongan_obat%";
-}
-if ($bentuk_sediaan) {
-    $query .= " AND `BENTUK SEDIAAN` LIKE :bentuk_sediaan";
-    $params[':bentuk_sediaan'] = "%$bentuk_sediaan%";
-}
-if ($jenis_sediaan) {
-    $query .= " AND `JENIS SEDIAAN` LIKE :jenis_sediaan";
-    $params[':jenis_sediaan'] = "%$jenis_sediaan%";
-}
-if ($komposisi) {
-    $query .= " AND `KOMPOSISI` LIKE :komposisi";
-    $params[':komposisi'] = "%$komposisi%";
-}
-if ($indikasi) {
-    $query .= " AND `INDIKASI` LIKE :indikasi";
-    $params[':indikasi'] = "%$indikasi%";
-}
-if ($status_sertifikat) {
-    $query .= " AND `STATUS SERTIFIKAT` LIKE :status_sertifikat";
-    $params[':status_sertifikat'] = "%$status_sertifikat%";
-}
+    if ($main_keyword) {
+        $query .= " AND (`NAMA OBAT` LIKE :main_keyword OR `NOMOR PENDAFTARAN` LIKE :main_keyword)";
+        $params[':main_keyword'] = "%$main_keyword%";
+    }
+    if ($nama_perusahaan) {
+        $query .= " AND `NAMA PERUSAHAAN` LIKE :nama_perusahaan";
+        $params[':nama_perusahaan'] = "%$nama_perusahaan%";
+    }
+    if ($alamat) {
+        $query .= " AND `ALAMAT` LIKE :alamat";
+        $params[':alamat'] = "%$alamat%";
+    }
+    if ($provinsi) {
+        $query .= " AND `PROVINSI` LIKE :provinsi";
+        $params[':provinsi'] = "%$provinsi%";
+    }
+    if ($jenis_perusahaan) {
+        $query .= " AND `JENIS PERUSAHAAN` LIKE :jenis_perusahaan";
+        $params[':jenis_perusahaan'] = "%$jenis_perusahaan%";
+    }
+    if ($asal_obat) {
+        $query .= " AND `ASAL OBAT` LIKE :asal_obat";
+        $params[':asal_obat'] = "%$asal_obat%";
+    }
+    if ($golongan_obat) {
+        $query .= " AND `GOLONGAN OBAT` LIKE :golongan_obat";
+        $params[':golongan_obat'] = "%$golongan_obat%";
+    }
+    if ($bentuk_sediaan) {
+        $query .= " AND `BENTUK SEDIAAN` LIKE :bentuk_sediaan";
+        $params[':bentuk_sediaan'] = "%$bentuk_sediaan%";
+    }
+    if ($jenis_sediaan) {
+        $query .= " AND `JENIS SEDIAAN` LIKE :jenis_sediaan";
+        $params[':jenis_sediaan'] = "%$jenis_sediaan%";
+    }
+    if ($komposisi) {
+        $query .= " AND `KOMPOSISI` LIKE :komposisi";
+        $params[':komposisi'] = "%$komposisi%";
+    }
+    if ($indikasi) {
+        $query .= " AND `INDIKASI` LIKE :indikasi";
+        $params[':indikasi'] = "%$indikasi%";
+    }
+    if ($status_sertifikat) {
+        $query .= " AND `STATUS SERTIFIKAT` LIKE :status_sertifikat";
+        $params[':status_sertifikat'] = "%$status_sertifikat%";
+    }
 
     // Eksekusi query
     $stmt = $pdo->prepare($query);
@@ -87,6 +87,23 @@ if ($status_sertifikat) {
         die();
     }
 
+    
+    if (isset($_GET['download_pdf'])) {
+        // Ambil parameter `order_by` untuk menentukan urutan
+        $orderBy = $_GET['order_by'] ?? '';
+    
+        // Urutkan data berdasarkan pilihan user untuk PDF
+        if ($orderBy === 'nama_obat') {
+            usort($results, fn($a, $b) => strcmp($a['NAMA OBAT'], $b['NAMA OBAT']));
+        } elseif ($orderBy === 'sisa_waktu') {
+            usort($results, fn($a, $b) => (int)$b['SISA WAKTU'] - (int)$a['SISA WAKTU']);
+        }
+        
+        // Generate PDF setelah data diurutkan
+        generatePDF($results);
+    }
+
+    
     // Fungsi untuk membuat PDF
     function generatePDF($results) {
         require('vendor/setasign/fpdf/fpdf.php');
@@ -97,20 +114,20 @@ if ($status_sertifikat) {
     
         // Judul
            // Menambahkan logo di samping kiri judul
-    $logoPath = 'Data/bpkil.png'; // Pastikan file logo berada di lokasi ini
-    $pdf->Image($logoPath, 10, 10, 20); // Atur posisi (x, y) dan lebar logo (20 mm)
-    
-    // Judul di sebelah kanan logo
-    $pdf->SetXY(35, 10); // Pindahkan posisi tulisan ke kanan setelah logo
-    $pdf->Cell(0, 10, 'Hasil Pencarian Obat Ikan', 0, 1, 'L'); // Posisi kiri untuk judul
-    
-    // Tanggal pencarian di bawah judul
-    $pdf->SetXY(35, 20); // Posisikan tanggal di bawah judul
-    $tanggalPencarian = date('d-m-Y');
-    $pdf->SetFont('Arial', 'I', 8);
-    $pdf->Cell(0, 10, "Tanggal Pencarian: $tanggalPencarian", 0, 1, 'L');
-    $pdf->Ln(5);
-    
+        $logoPath = 'Data/bpkil.png'; // Pastikan file logo berada di lokasi ini
+        $pdf->Image($logoPath, 10, 10, 20); // Atur posisi (x, y) dan lebar logo (20 mm)
+        
+        // Judul di sebelah kanan logo
+        $pdf->SetXY(35, 10); // Pindahkan posisi tulisan ke kanan setelah logo
+        $pdf->Cell(0, 10, 'Hasil Pencarian Obat Ikan', 0, 1, 'L'); // Posisi kiri untuk judul
+        
+        // Tanggal pencarian di bawah judul
+        $pdf->SetXY(35, 20); // Posisikan tanggal di bawah judul
+        $tanggalPencarian = date('d-m-Y');
+        $pdf->SetFont('Arial', 'I', 8);
+        $pdf->Cell(0, 10, "Tanggal Pencarian: $tanggalPencarian", 0, 1, 'L');
+        $pdf->Ln(5);
+        
         $pdf->SetFont('Arial', '', 8);
         $no = 1;
     
@@ -154,7 +171,8 @@ if ($status_sertifikat) {
             $pdf->Cell(0, 6, $row['JENIS SEDIAAN'], 0, 1);
     
             $pdf->Cell(50, 6, 'Komposisi:', 0, 0);
-            $pdf->Cell(0, 6, $row['KOMPOSISI'], 0, 1);
+            $komposisi = $row['KOMPOSISI'];
+            $pdf->MultiCell(0, 6, $komposisi, 0, 1);
     
             $pdf->Cell(50, 6, 'Indikasi:', 0, 0);
             $indikasi = $row['INDIKASI'];
@@ -181,30 +199,14 @@ if ($status_sertifikat) {
     }
     
     
-    
-    
-    if (isset($_GET['download_pdf'])) {
-        // Pastikan data telah diurutkan sebelum mengirim ke fungsi generatePDF
-        if (isset($_GET['order_by'])) {
-            $orderBy = $_GET['order_by'];
-            if ($orderBy === 'nama_obat') {
-                usort($results, fn($a, $b) => strcmp($a['NAMA OBAT'], $b['NAMA OBAT']));
-            } elseif ($orderBy === 'sisa_waktu') {
-                usort($results, fn($a, $b) => (int)$b['SISA WAKTU'] - (int)$a['SISA WAKTU']);
-            }
-        }
-    
-        generatePDF($results);
-        exit;
-    }
-    
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hasil Pencarian Obat Ikan</title>
+    <link rel="icon" href="Data/bpkil.png" type="image/x-icon">
+    <title>Hasil Merk dan Registrasi</title>
     <style>
         body {
             background-color: #e0f7fa;
@@ -315,6 +317,12 @@ if ($status_sertifikat) {
                 white-space: nowrap;
             }
         }
+        .footer {
+        margin-top: 20px; /* Mengurangi jarak antara footer dan tabel */
+        text-align: center;
+        color: #555;
+        font-size: 14px;
+        }
     </style>
     <script>
         function showDateTime() {
@@ -326,31 +334,47 @@ if ($status_sertifikat) {
         }
         setInterval(showDateTime, 1000);
 
-        function sortTable(columnIndex, isDate = false, isNumeric = false) {
+
+        function sortTableByColumn(columnIndex, order) {
             const table = document.getElementById("dataTable");
-            const rows = Array.from(table.rows).slice(1);
-
-            rows.sort((a, b) => {
-                const aText = a.cells[columnIndex].textContent.trim().toLowerCase();
-                const bText = b.cells[columnIndex].textContent.trim().toLowerCase();
-
-                if (isDate) {
-                    const aDate = new Date(aText);
-                    const bDate = new Date(bText);
-                    return aDate - bDate;
-                } else if (isNumeric) {
-                    const aNum = parseFloat(aText) || 0;
-                    const bNum = parseFloat(bText) || 0;
-                    return bNum - aNum;
-                }
-
-                return aText.localeCompare(bText);
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const sortedRows = rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIndex].textContent.trim();
+                const cellB = rowB.cells[columnIndex].textContent.trim();
+                
+                // Mengonversi cellA dan cellB menjadi angka jika kolomnya adalah 'sisa_waktu'
+                const valueA = columnIndex === 1 ? parseInt(cellA) : cellA; // Misalkan kolom 'sisa_waktu' ada di indeks 1
+                const valueB = columnIndex === 1 ? parseInt(cellB) : cellB;
+                
+                return order === "asc" 
+                    ? valueA > valueB ? 1 : -1
+                    : valueA < valueB ? 1 : -1;
             });
-
-            const tbody = table.querySelector("tbody");
-            tbody.innerHTML = "";
-            rows.forEach(row => tbody.appendChild(row));
+            sortedRows.forEach(row => table.querySelector("tbody").appendChild(row));
         }
+
+
+
+        function updateOrderBy(value) {
+            const orderBy = document.getElementById('order-by');
+            const currentOrder = orderBy.value;
+            const columnIndex = value === "nama_obat" ? 0 : 1;
+            const order = currentOrder === value ? "desc" : "asc";
+            orderBy.value = value;
+
+            // Urutkan tabel berdasarkan kolom yang dipilih
+            sortTableByColumn(columnIndex, order);
+
+            // Update URL untuk menyertakan parameter order_by
+            const url = new URL(window.location.href);
+            url.searchParams.set('order_by', value); // Menambahkan atau mengubah parameter 'order_by'
+            window.history.pushState({}, '', url); // Memperbarui URL tanpa memuat ulang halaman
+
+           
+        }
+
+
+
     </script>
 </head>
 <body>
@@ -363,22 +387,34 @@ if ($status_sertifikat) {
         </div>
 
         <h1 style="text-align: center;">Hasil Pencarian Obat Ikan</h1>
-
-        <form action="" method="get">
-            <input type="hidden" name="main_keyword" value="<?= htmlspecialchars($main_keyword); ?>">
-            <input type="hidden" name="order_by" value="<?= isset($_GET['order_by']) ? htmlspecialchars($_GET['order_by']) : ''; ?>">
-            <button type="submit" name="download_pdf" class="btn-download">Unduh Hasil Pencarian</button>
-        </form>
-
-
         <button type="submit" class="btn-kembali">
             <a href="cekobat.php">Kembali</a>
         </button>
-        <select class="filter-select" onchange="this.value === 'nama_obat' ? sortTable(0) : sortTable(13, false, true);">
+
+
+
+        <form id="download-form" action="" method="get">
+            <input type="hidden" name="main_keyword" value="<?= htmlspecialchars($main_keyword); ?>">
+            <input type="hidden" name="order_by" id="order-by" value="<?= isset($_GET['order_by']) ? htmlspecialchars($_GET['order_by']) : ''; ?>">
+            
+            <select class="filter-select" onchange="updateOrderBy(this.value)">
+                <option value="">Urutkan</option>
+                <option value="nama_obat" <?= isset($_GET['order_by']) && $_GET['order_by'] === 'nama_obat' ? 'selected' : ''; ?>>Nama Obat</option>
+                <option value="sisa_waktu" <?= isset($_GET['order_by']) && $_GET['order_by'] === 'sisa_waktu' ? 'selected' : ''; ?>>Sisa Waktu</option>
+            </select>
+            
+            <button type="submit" name="download_pdf" class="btn-download">Unduh Hasil Pencarian</button>
+        </form>
+        
+
+
+      
+
+        <!-- <select class="filter-select" onchange="this.value === 'nama_obat' ? sortTable(0) : sortTable(13, false, true);">
             <option value="">Urutkan</option>
             <option value="nama_obat">Nama Obat</option>
             <option value="sisa_waktu">Sisa Waktu</option>
-        </select>
+        </select> -->
 
         <div class="table-container">
             <table id="dataTable">

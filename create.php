@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'koneksi.php'; // Menginclude file konfigurasi database
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Mengambil data dari form
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             VALUES ($new_no,'$nama_obat', '$nama_perusahaan', '$alamat', '$provinsi', '$jenis_perusahaan', '$nomor_pendaftaran', '$asal_obat', '$golongan_obat', '$bentuk_sediaan', '$jenis_sediaan', '$komposisi', '$indikasi', '$masa_berlaku_formatted',  '$sisa_waktu', '$status_sertifikat')";
 
     if ($conn->query($sql) === TRUE) {
-        header("Location: DataObat.php"); // Redirect ke halaman index setelah berhasil
+        header("Location: Dashboard/tables.php"); // Redirect ke halaman index setelah berhasil
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

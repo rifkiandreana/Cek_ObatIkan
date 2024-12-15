@@ -170,7 +170,7 @@
     <!-- Container -->
     <div class="container">
         <h1>Pencarian Data Obat Ikan</h1>
-        <form action="hasil.php" method="get">
+        <form action="hasilnamaobat.php" method="get">
             <!-- Kolom Filter Tambahan -->
             <div class="additional-filters">
                 <div>
