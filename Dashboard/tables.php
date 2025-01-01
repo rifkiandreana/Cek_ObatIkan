@@ -12,8 +12,7 @@ $result = $conn->query("SELECT * FROM obat_ikan");
     <link rel="icon" href="../Data/bpkil.png" type="image/x-icon">
     <meta name="description" content="" />
     <meta name="author" content="" />
-
-    <title>SB Admin 2 - Tables</title>
+    <title>Data Obat Ikan</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
@@ -56,11 +55,9 @@ $result = $conn->query("SELECT * FROM obat_ikan");
         <!-- Heading -->
         <div class="sidebar-heading">Addons</div>
 
-
-
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-          <a class="nav-link" href="charts.html">
+          <a class="nav-link" href="perusahaan.php">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Perusahaan</span></a
           >

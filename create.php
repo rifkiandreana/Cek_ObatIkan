@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Obat Ikan</title>
+    <link rel="icon" href="Data/bpkil.png" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -123,17 +124,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 1em;
             width: 100%;
         }
-        button:hover {
-            background-color: #45a049;
-        }
         .back-link {
-            text-align: center;
-            margin-top: 20px;
+            display: inline-block;
+            background-color:rgb(255, 0, 0); /* Warna merah */
+            color: white; /* Warna teks */
+            padding: 10px ; /* Padding untuk tombol */
+            text-align: center; /* Pusatkan teks */
+            text-decoration: none; /* Hilangkan garis bawah */
+            border-radius: 5px; /* Sudut tombol melengkung */
+            border: none; /* Hilangkan border */
+            font-size: 1em; /* Ukuran font */
+            cursor: pointer; /* Ubah kursor menjadi pointer */
+            margin-top: 25px;
+        }
+
+        .back-link:hover {
+            background-color:rgb(255, 106, 106); /* Warna saat hover */
         }
         .back-link a {
-            color: #4CAF50;
+            color:rgb(255, 255, 255);
             text-decoration: none;
         }
+
     </style>
     <script>
         function updateTime() {
@@ -305,11 +317,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <div>
-                        <label>&nbsp;</label> <!-- Empty label for spacing -->
-                        <button type="submit">Simpan</button>
-                    </div>
+                    <label>&nbsp;</label> <!-- Empty label for spacing -->
+                    <button type="submit">Simpan</button>
+                </div>
+                
+                
             </form>
         </div>
+        <div>
+            <div class="back-link">
+                <a href="Dashboard/tables.php">Kembali Daftar Obat Ikan</a>
+            </div>
+        </div>
+        
 </body>
 </html>
 

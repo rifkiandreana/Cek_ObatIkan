@@ -12,7 +12,8 @@
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
+    /* background-color: #f8f9fa; */
+    background-image: url(Data/BK2.jpg);
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -141,11 +142,11 @@
 </head>
 <body>
 
-  <h2 class="section-title">BPKIL | Smarth Pencarian</h2>
+  <h2 class="section-title">BPKIL | Smart Pencarian Obat Ikan</h2>
 
   <div class="card-container">
     <!-- Card 1 -->
-    <a href="cekobat.php" target="_blank" style="text-decoration: none; color: inherit;" data-bs-toggle="tooltip" data-bs-placement="top" title="Klik untuk melihat informasi merk dan registrasi obat ikan.">
+    <a href="cekobat.php" style="text-decoration: none; color: inherit;" data-bs-toggle="tooltip" data-bs-placement="top" title="Klik untuk melihat informasi merk dan registrasi obat ikan.">
     <div class="card">
         <div class="card-body">
             <i class="bi bi-clipboard2-fill"></i>
@@ -156,7 +157,7 @@
 
 
     <!-- Card 2 -->
-    <a href="ceknamaobat.php" target="_blank" style="text-decoration: none; color: inherit;" data-bs-toggle="tooltip" data-bs-placement="top" title="Klik untuk melihat informasi komposisi, indikasi, nama perusahaan, golongan, bentuk dan jenis sediaan obat, sisa waktu serta status sertifikasi.">
+    <a href="ceknamaobat.php"  style="text-decoration: none; color: inherit;" data-bs-toggle="tooltip" data-bs-placement="top" title="Klik untuk melihat informasi komposisi, indikasi, nama perusahaan, golongan, bentuk dan jenis sediaan obat, sisa waktu serta status sertifikasi.">
     <div class="card">
       <div class="card-body">
         <i class="bi bi-clipboard2-heart-fill"></i>
@@ -166,7 +167,7 @@
     </a>
 
     <!-- Card 3 -->
-    <a href="cekobat.php" target="_blank" style="text-decoration: none; color: inherit;" data-bs-toggle="tooltip" data-bs-placement="top" title="Klik untuk melihat informasi detail perusahaan obat ikan.">
+    <a href="daftarperusahaan.php" style="text-decoration: none; color: inherit;" data-bs-toggle="tooltip" data-bs-placement="top" title="Klik untuk melihat informasi detail perusahaan obat ikan.">
     <div class="card">
       <div class="card-body">
         <i class="bi bi-clipboard2-heart"></i>
